@@ -7,7 +7,7 @@ class Constants {
         const val LIST_OF_PHOTOS_SERVICE_END_POINT = "https://api.flickr.com/services/rest/"
         const val PHOTO_SERVICE_END_POINT =
             "https://farm{farmId}.staticflickr.com/{serverId}/{secretId}_{photoId}.jpg"
-        const val CATEGORIES_PAGE_LIMIT = 10
-        const val SERIVE_RESPONSE_TYPE = "json"
+        const val PHOTOS_PAGE_LIMIT = 10
+        const val SERVICE_RESPONSE_TYPE = "json"
     }
 }
