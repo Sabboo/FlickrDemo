@@ -6,15 +6,15 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.flickrdemo.features.photos.data.local.PhotosListDao
-import com.example.flickrdemo.features.photos.data.model.PhotosListResponseModel
-import com.example.flickrdemo.features.photos.data.model.PhotosListTypeConverter
+import com.example.flickrdemo.features.photos.data.model.PhotosListResponseModelTypeConverter
+import com.example.flickrdemo.features.photos.data.model.PhotosListServerResponse
 
 @Database(
-    entities = [PhotosListResponseModel::class],
+    entities = [PhotosListServerResponse::class],
     version = 1,
     exportSchema = false
 )
-@TypeConverters(PhotosListTypeConverter::class)
+@TypeConverters(PhotosListResponseModelTypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun photosListDao(): PhotosListDao
