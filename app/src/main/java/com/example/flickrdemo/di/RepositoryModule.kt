@@ -5,6 +5,6 @@ import org.koin.dsl.module
 
 val RepositoryModule = module {
 
-    single { PhotosListRepository() }
+    single { PhotosListRepository(get(), get()) }
 
 }

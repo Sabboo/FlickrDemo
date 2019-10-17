@@ -1,5 +1,6 @@
 package com.example.flickrdemo.di
 
+import com.example.flickrdemo.utilities.Constants.Companion.FLICKR_SERVICE_BASE_URL
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -17,29 +18,30 @@ val NetworkModule = module {
 }
 
 
-fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
-    val builder = OkHttpClient.Builder()
-    builder.addInterceptor(loggingInterceptor)
-    return builder.build()
-}
-
 fun provideGson(): Gson {
     val gsonBuilder = GsonBuilder()
     gsonBuilder.setPrettyPrinting()
+    gsonBuilder.setLenient()
     return gsonBuilder.create()
-}
-
-fun provideRetrofit(client: OkHttpClient, gson: Gson): Retrofit {
-    return Retrofit.Builder()
-        .client(client)
-        .addConverterFactory(GsonConverterFactory.create(gson))
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
 }
 
 fun provideLoggingInterceptor(): HttpLoggingInterceptor {
     val logging = HttpLoggingInterceptor()
     logging.apply { this.level = HttpLoggingInterceptor.Level.BODY }
     return logging
+}
+
+fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+    val builder = OkHttpClient.Builder()
+    builder.addInterceptor(loggingInterceptor)
+    return builder.build()
+}
+
+fun provideRetrofit(client: OkHttpClient, gson: Gson): Retrofit {
+    return Retrofit.Builder()
+        .client(client)
+        .baseUrl(FLICKR_SERVICE_BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create(gson))
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .build()
 }
