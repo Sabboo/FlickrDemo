@@ -8,5 +8,6 @@ class Constants {
         const val PHOTO_SERVICE_END_POINT =
             "https://farm{farmId}.staticflickr.com/{serverId}/{secretId}_{photoId}.jpg"
         const val CATEGORIES_PAGE_LIMIT = 10
+        const val SERIVE_RESPONSE_TYPE = "json"
     }
 }
