@@ -2,6 +2,7 @@ package com.example.flickrdemo
 
 import android.app.Application
 import android.content.Context
+import com.example.flickrdemo.di.*
 import com.facebook.stetho.Stetho
 import org.koin.core.context.startKoin
 
@@ -12,7 +13,13 @@ internal class App : Application() {
         Stetho.initializeWithDefaults(this)
         startKoin {
             modules(
-                listOf()
+                listOf(
+                    DaoModule,
+                    NetworkModule,
+                    RepositoryModule,
+                    ViewModelModule,
+                    WebServiceModule
+                )
             )
         }
     }
