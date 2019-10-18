@@ -1,13 +1,16 @@
 package com.example.flickrdemo.features.photos.presentation.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.flickrdemo.R
 import com.example.flickrdemo.databinding.ItemPhotoBinding
 import com.example.flickrdemo.features.photos.data.model.Photo
 import com.example.flickrdemo.utilities.Constants.Companion.PHOTOS_PAGE_LIMIT
+
 
 class PhotosAdapter : RecyclerView.Adapter<PhotosAdapter.PhotosHolder>() {
 
@@ -30,6 +33,14 @@ class PhotosAdapter : RecyclerView.Adapter<PhotosAdapter.PhotosHolder>() {
 
     override fun onBindViewHolder(holder: PhotosHolder, position: Int) {
         holder.bind(photosList[position])
+        setAnimation(holder.itemView)
+    }
+
+    private fun setAnimation(viewToAnimate: View) {
+        val animation =
+            AnimationUtils.loadAnimation(viewToAnimate.context, android.R.anim.slide_in_left)
+        animation.duration = 1000
+        viewToAnimate.startAnimation(animation)
     }
 
     class PhotosHolder(private val itemPhotoBinding: ItemPhotoBinding) :
