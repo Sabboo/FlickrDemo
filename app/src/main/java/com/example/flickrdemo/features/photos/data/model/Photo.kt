@@ -7,4 +7,9 @@ data class Photo(
     @SerializedName("secret") val secret: String,
     @SerializedName("server") val server: String,
     @SerializedName("farm") val farm: String
-)
+) {
+    fun photoURL() = String.format(
+        "https://farm%s.staticflickr.com/%s/%s_%s.jpg",
+        farm, server, id, secret
+    )
+}
