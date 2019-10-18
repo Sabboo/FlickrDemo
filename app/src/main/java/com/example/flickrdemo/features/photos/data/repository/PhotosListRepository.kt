@@ -7,7 +7,9 @@ import com.example.flickrdemo.utilities.Constants
 import com.example.flickrdemo.utilities.Constants.Companion.API_KEY
 import com.example.flickrdemo.utilities.Constants.Companion.PHOTOS_PAGE_LIMIT
 import com.example.flickrdemo.utilities.Constants.Companion.SERVICE_RESPONSE_TYPE
+import io.reactivex.Completable
 import io.reactivex.Single
+
 
 class PhotosListRepository(
     private val remoteDataSource: PhotosListService,
@@ -31,6 +33,10 @@ class PhotosListRepository(
             }.onErrorResumeNext {
                 localDataSource.getPhotosListResponseByPage(page)
             }
+    }
+
+    fun clearCache(): Completable {
+        return Completable.fromAction { localDataSource.deleteCachedPhotos() }
     }
 
 }
