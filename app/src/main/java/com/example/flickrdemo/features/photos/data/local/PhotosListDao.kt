@@ -16,4 +16,7 @@ interface PhotosListDao {
     @Query("SELECT * FROM PhotosListServerResponse WHERE pageNumber is :page")
     fun getPhotosListResponseByPage(page: Int): Single<PhotosListServerResponse>
 
+    @Query("DELETE FROM PhotosListServerResponse")
+    fun deleteCachedPhotos()
+
 }
