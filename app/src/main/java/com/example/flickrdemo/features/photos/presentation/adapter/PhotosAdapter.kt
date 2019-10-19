@@ -53,6 +53,10 @@ class PhotosAdapter : RecyclerView.Adapter<PhotosAdapter.PhotosHolder>() {
         viewToAnimate.startAnimation(animation)
     }
 
+    fun clearAdapterData() {
+        photosList.clear()
+    }
+
     class PhotosHolder(private val itemPhotoBinding: ItemPhotoBinding) :
         RecyclerView.ViewHolder(itemPhotoBinding.root) {
 
