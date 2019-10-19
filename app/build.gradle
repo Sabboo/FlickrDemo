@@ -126,4 +126,8 @@ dependencies {
 
     // Stetho
     implementation "com.facebook.stetho:stetho:$stethoVersion"
+
+    // PhotoView
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+
 }
