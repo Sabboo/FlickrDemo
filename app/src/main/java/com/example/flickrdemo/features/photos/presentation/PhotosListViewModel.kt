@@ -24,7 +24,7 @@ class PhotosListViewModel(private val photosListRepository: PhotosListRepository
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     init {
-        progressBarLoading.value = true
+        setProgressBarLoading(true)
     }
 
     fun getPhotosList(page: Int) {
@@ -33,12 +33,12 @@ class PhotosListViewModel(private val photosListRepository: PhotosListRepository
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { photosListServerResponse: PhotosListServerResponse?, throwable: Throwable? ->
-                    progressBarLoading.value = false
+                    setProgressBarLoading(false)
                     photosListServerResponse?.let {
-                        currentPage = it.pageNumber + 1
-                        photosListData.value = it.photosListResponseModel.photosList
+                        setNewCurrentPage(it.pageNumber + 1)
+                        setPhotosListLiveData(it.photosListResponseModel.photosList)
                         if (it.pageNumber >= it.photosListResponseModel.totalNumberOfPages)
-                            isLastPage = true
+                            triggerReachingLastPage()
                     }
                     throwable?.let {
                         handleExceptions(it)
@@ -47,10 +47,30 @@ class PhotosListViewModel(private val photosListRepository: PhotosListRepository
         )
     }
 
+    private fun setProgressBarLoading(boolean: Boolean) {
+        progressBarLoading.value = boolean
+    }
+
+    private fun setPhotosListLiveData(photosList: List<Photo>) {
+        photosListData.value = photosList
+    }
+
+    private fun setNewCurrentPage(newCurrentPage: Int) {
+        currentPage = newCurrentPage
+    }
+
+    private fun triggerReachingLastPage() {
+        isLastPage = true
+    }
+
+    private fun setScreenMessage(message: String) {
+        errorMessage.value = message
+    }
+
     private fun handleExceptions(throwable: Throwable) {
         when (throwable) {
-            is IOException -> errorMessage.value = "Network Error"
-            is EmptyResultSetException -> errorMessage.value = "No Cached Results"
+            is IOException -> setScreenMessage("Network Error")
+            is EmptyResultSetException -> setScreenMessage("No Cached Results")
         }
     }
 
@@ -65,7 +85,7 @@ class PhotosListViewModel(private val photosListRepository: PhotosListRepository
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : CompletableObserver {
                 override fun onComplete() {
-                    errorMessage.value = "Cached data deleted successfully."
+                    setScreenMessage("Cached data deleted successfully.")
                 }
 
                 override fun onSubscribe(d: Disposable) {
@@ -73,7 +93,7 @@ class PhotosListViewModel(private val photosListRepository: PhotosListRepository
                 }
 
                 override fun onError(e: Throwable) {
-                    errorMessage.value = "Failed to delete cached data."
+                    setScreenMessage("Failed to delete cached data.")
                 }
             })
     }
