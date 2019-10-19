@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.flickrdemo.R
 import com.example.flickrdemo.databinding.ItemPhotoBinding
 import com.example.flickrdemo.features.photos.data.model.Photo
+import com.example.flickrdemo.features.slider.presentation.SliderActivity
 import com.example.flickrdemo.utilities.Constants.Companion.PHOTOS_PAGE_LIMIT
 
 
@@ -33,6 +34,15 @@ class PhotosAdapter : RecyclerView.Adapter<PhotosAdapter.PhotosHolder>() {
 
     override fun onBindViewHolder(holder: PhotosHolder, position: Int) {
         holder.bind(photosList[position])
+        holder.itemView.setOnClickListener {
+            it.context.startActivity(
+                SliderActivity.intentInstance(
+                    holder.itemView.context,
+                    photosList,
+                    position
+                )
+            )
+        }
         setAnimation(holder.itemView)
     }
 
