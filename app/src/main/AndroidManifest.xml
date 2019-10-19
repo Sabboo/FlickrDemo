@@ -15,6 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".features.slider.presentation.SliderActivity"></activity>
         <activity android:name=".features.photos.presentation.PhotosListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
